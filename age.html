@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MediTruth - Enter Age</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-r from-blue-100 to-indigo-200 p-6 flex flex-col items-center">
+  <h1 class="text-3xl font-bold text-indigo-700 mb-4">🎂 Enter Your Age</h1>
+  <input id="ageInput" type="number" class="p-2 rounded shadow w-1/2" placeholder="e.g., 25" />
+  <button onclick="next()" class="mt-4 bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-700">Continue</button>
+
+  <script src="script.js"></script>
+  <script>
+    function next() {
+      const age = parseInt(document.getElementById('ageInput').value);
+      if (!isNaN(age)) {
+        save('age', age);
+        window.location.href = 'effects.html';
+      } else {
+        alert("Please enter a valid age");
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom, #003973, #e5e5be);
+  color: #fff;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.intro-section {
+  background: url("/static/intro-bg.jpg") no-repeat center center;
+  background-size: cover;
+  border-radius: 20px;
+  padding: 100px 40px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  animation: fadeIn 1s ease;
+}
+
+.intro-section h1 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.intro-section p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.intro-section button {
+  background: #00cec9;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  color: white;
+}
+
+.intro-section button:hover {
+  background: #00b894;
+}
+
+.hidden {
+  display: none;
+}
+
+.main-section {
+  animation: fadeIn 1s ease;
+}
+
+.form-container input,
+.form-container button {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  width: 100%;
+  font-size: 1rem;
+  border: none;
+}
+
+.form-container button {
+  background-color: #0984e3;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.tabs {
+  margin-top: 30px;
+}
+
+.tab-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.tab-btn {
+  background: #636e72;
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.tab-btn.active {
+  background: #00cec9;
+}
+
+.tab-content {
+  display: none;
+  background-color: rgba(255,255,255,0.1);
+  padding: 20px;
+  border-radius: 12px;
+  color: white;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Smooth animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

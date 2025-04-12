@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MediTruth: Drug Info & Safety</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --danger: #f72585;
+            --success: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: var(--dark);
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .intro-section, .main-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .intro-section:hover, .main-section:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+        }
+        
+        p {
+            color: #555;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+        
+        button:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+        }
+        
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin: 2rem 0;
+        }
+        
+        input {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(72, 149, 239, 0.2);
+        }
+        
+        .tabs {
+            margin-top: 2rem;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tab-buttons {
+            display: flex;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+        }
+        
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border-radius: 0;
+            margin: 0;
+            padding: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab-btn.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+        
+        .tab-btn.active::after {
+            width: 80%;
+        }
+        
+        .tab-content {
+            padding: 2rem;
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .error {
+            color: var(--danger);
+            background: rgba(247, 37, 133, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* Decorative elements */
+        .intro-section::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%234361ee" opacity="0.1"><circle cx="25" cy="25" r="20"/><circle cx="75" cy="75" r="20"/></svg>');
+            z-index: -1;
+        }
+        
+        .main-section::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%234cc9f0" opacity="0.1"><circle cx="25" cy="75" r="20"/><circle cx="75" cy="25" r="20"/></svg>');
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Intro Page -->
+        <div id="intro" class="intro-section">
+            <h1>🌐 Welcome to MediTruth</h1>
+            <p>Your AI-powered guide to safe and informed medical choices.</p>
+            <button onclick="startApp()">🚀 Get Started</button>
+        </div>
+
+        <!-- Main App Page -->
+        <div id="main-app" class="main-section hidden">
+            <h1>💊 MediTruth: Drug Info & Safety</h1>
+            <form method="POST" class="form-container">
+                <input type="text" name="drug" placeholder="Enter Drug or Vaccine Name" required>
+                <input type="number" name="age" placeholder="Enter Age" required>
+                <input type="number" name="weight" placeholder="Enter Weight (kg)" required>
+                <button type="submit">🔍 Search Medication</button>
+            </form>
+
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+
+            {% if drug %}
+                <div class="tabs">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" onclick="showTab('info')">🧪 Drug Info</button>
+                        <button class="tab-btn" onclick="showTab('side')">🚨 Side Effects</button>
+                        <button class="tab-btn" onclick="showTab('dosage')">💊 Dosage Guide</button>
+                    </div>
+                    <div class="tab-content active" id="info">
+                        <h2>🔍 {{ drug|capitalize }} - Drug Information</h2>
+                        <p><strong>💡 Primary Use:</strong> {{ use }}</p>
+                        <div class="info-card" style="background: rgba(67, 97, 238, 0.1); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                            <p><strong>ℹ️ Additional Info:</strong> Always consult with your healthcare provider before starting any new medication.</p>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="side">
+                        <h2>🚨 Potential Side Effects</h2>
+                        <p>{{ side_effect }}</p>
+                        <div class="warning-card" style="background: rgba(247, 37, 133, 0.1); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                            <p><strong>⚠️ Warning:</strong> If you experience severe side effects, seek medical attention immediately.</p>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="dosage">
+                        <h2>💊 Recommended Dosage</h2>
+                        <p><strong>Based on your profile ({{ age }} years, {{ weight }} kg):</strong> {{ dosage }} mg</p>
+                        <div class="note-card" style="background: rgba(76, 201, 240, 0.1); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                            <p><strong>📝 Note:</strong> Dosage may vary based on individual health conditions. Always follow your doctor's prescription.</p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function startApp() {
+            document.getElementById('intro').classList.add('hidden');
+            document.getElementById('main-app').classList.remove('hidden');
+        }
+        
+        function showTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Deactivate all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show the selected tab content
+            document.getElementById(tabId).classList.add('active');
+            
+            // Activate the clicked button
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
